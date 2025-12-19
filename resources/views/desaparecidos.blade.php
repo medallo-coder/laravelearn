@@ -1,119 +1,230 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Registrar Persona Desaparecida</title>
+<meta charset="UTF-8">
+<title>Registro Persona Desaparecida</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            padding: 40px;
-        }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    padding: 40px;
+}
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+h1 {
+    text-align: center;
+    color: #333;
+}
 
-        form {
-            background: #ffffff;
-            max-width: 500px;
-            margin: auto;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+.form-container {
+    background: #fff;
+    max-width: 600px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
 
-        input, textarea, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+.step {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 4px solid #ccc;
+    font-weight: bold;
+}
 
-        textarea {
-            resize: vertical;
-        }
+.step.active {
+    border-color: #e19d09ff;
+    color: #e19d09ff;
+}
 
-        button {
-            margin-top: 20px;
-            width: 100%;
-            background-color: #e19d09ff;
-            color: white;
-            border: none;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+.step-content {
+    display: none;
+}
 
-        button:hover {
-            background-color: #af621eff;
-        }
+.step-content.active {
+    display: block;
+}
 
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #eb5025ff;
-            text-decoration: none;
-        }
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
 
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    background-color: #e19d09ff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #af621eff;
+}
+
+button.secondary {
+    background-color: #999;
+}
+</style>
 </head>
 <body>
 
 <h1>Registrar Persona Desaparecida</h1>
 
-<form action="{{ route('desaparecidos.store') }}" method="POST">
-    @csrf
+<div class="form-container">
 
-    <label>Nombres:</label>
-    <input type="text" name="nombres" required>
+    <!-- Indicador -->
+    <div class="step-indicator">
+        <div class="step active" id="step-1">Fase 1<br>Persona</div>
+        <div class="step" id="step-2">Fase 2<br>Características</div>
+        <div class="step" id="step-3">Fase 3<br>Prendas</div>
+    </div>
 
-    <label>Apellidos:</label>
-    <input type="text" name="apellidos" required>
+    <!-- FASE 1 -->
+    <div class="step-content active">
+        <label>Nombres</label>
+        <input type="text">
 
-    <label>Edad(Desaparición):</label>
-    <input type="number" name="edad" min="0">
+        <label>Apellidos</label>
+        <input type="text">
 
-    <label>Descripción:</label>
-    <textarea name="descripcion"></textarea>
+        <label>Edad (desaparición)</label>
+        <input type="number">
 
-    <label>Lugar Desaparición:</label>
-    <input type="text" name="lugar" required>
+        <label>Descripción</label>
+        <textarea></textarea>
 
-    <label>Fecha y Hora de desaparición:</label>
-    <input type="datetime-local" name="fecha" required>
+        <label>Lugar de desaparición</label>
+        <input type="text">
 
-    <label>Sexo:</label>
-    <select name="sexo" required>
-        <option value="">Seleccione</option>
-        <option value="hombre">Hombre</option>
-        <option value="mujer">Mujer</option>
-    </select>
+        <label>Fecha y hora</label>
+        <input type="datetime-local">
+    </div>
 
-    <label>Descripción física:</label>
-    <input type="text" name="descripcion_fisica" required>
+    <!-- FASE 2 -->
+    <div class="step-content">
+        <label>Sexo</label>
+        <select>
+            <option value="">Seleccione</option>
+            <option>Hombre</option>
+            <option>Mujer</option>
+        </select>
 
-    <label>Vestimenta:</label>
-    <input type="text" name="vestimenta" required>
+        <label>Estatura</label>
+        <input type="text">
 
-    <button type="submit">Guardar</button>
-</form>
+        <label>Complexión</label>
+        <input type="text">
 
-<a href="{{ route('desaparecidos.index') }}">Ver lista de personas</a>
+        <label>Color de piel</label>
+        <input type="text">
+
+        <label>Color de ojos</label>
+        <input type="text">
+
+        <label>Color de cabello</label>
+        <input type="text">
+
+        <label>Tipo de cabello</label>
+        <input type="text">
+
+        <label>Señas particulares</label>
+        <textarea></textarea>
+
+        <label>Implantes</label>
+        <input type="text">
+
+        <label>Prótesis</label>
+        <input type="text">
+    </div>
+
+    <!-- FASE 3 -->
+    <div class="step-content">
+        <label>Parte superior</label>
+        <input type="text">
+
+        <label>Color parte superior</label>
+        <input type="text">
+
+        <label>Parte inferior</label>
+        <input type="text">
+
+        <label>Color parte inferior</label>
+        <input type="text">
+
+        <label>Calzado</label>
+        <input type="text">
+
+        <label>Color calzado</label>
+        <input type="text">
+
+        <label>Accesorios</label>
+        <input type="text">
+    </div>
+
+    <!-- BOTONES -->
+    <div class="buttons">
+        <button class="secondary" onclick="prevStep()">Atrás</button>
+        <button onclick="nextStep()">Siguiente</button>
+    </div>
+
+</div>
+
+<script>
+let currentStep = 0;
+const steps = document.querySelectorAll('.step-content');
+const indicators = document.querySelectorAll('.step');
+
+function updateSteps() {
+    steps.forEach((step, index) => {
+        step.classList.toggle('active', index === currentStep);
+        indicators[index].classList.toggle('active', index === currentStep);
+    });
+}
+
+function nextStep() {
+    if (currentStep < steps.length - 1) {
+        currentStep++;
+        updateSteps();
+    } else {
+        alert('Formulario completado (simulado)');
+    }
+}
+
+function prevStep() {
+    if (currentStep > 0) {
+        currentStep--;
+        updateSteps();
+    }
+}
+</script>
 
 </body>
 </html>
