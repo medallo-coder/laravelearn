@@ -1,0 +1,68 @@
+#---------------------------------------------------------------
+# CONFIGURACIÓN BÁSICA DEL PROYECTO
+#---------------------------------------------------------------
+
+PROJECT_NAME           = "Sistema de Personas Desaparecidas"
+PROJECT_NUMBER         = "Versión 1.0.0"
+PROJECT_BRIEF          = "Sistema para el registro y seguimiento de personas desaparecidas"
+
+# README como portada
+USE_MDFILE_AS_MAINPAGE = README.md
+
+#---------------------------------------------------------------
+# ENTRADAS (SOLO LO QUE PEDISTE)
+#---------------------------------------------------------------
+
+INPUT                  = app resources routes README.md
+RECURSIVE              = YES
+
+# Excluir carpetas innecesarias
+EXCLUDE                = vendor node_modules public storage bootstrap tests
+
+#---------------------------------------------------------------
+# CONFIGURACIÓN PARA PHP / LARAVEL
+#---------------------------------------------------------------
+
+OPTIMIZE_OUTPUT_PHP    = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_PROTECTED      = YES
+EXTRACT_STATIC         = YES
+
+#---------------------------------------------------------------
+# SALIDA DE DOCUMENTACIÓN
+#---------------------------------------------------------------
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = docs
+
+GENERATE_LATEX         = NO
+GENERATE_XML           = NO
+GENERATE_MAN           = NO
+
+#---------------------------------------------------------------
+# FORMATO Y LIMPIEZA
+#---------------------------------------------------------------
+
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
+
+#---------------------------------------------------------------
+# ORDEN Y PRESENTACIÓN
+#---------------------------------------------------------------
+
+GENERATE_TREEVIEW      = YES
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = ./
+
+#---------------------------------------------------------------
+# ARCHIVOS A RECONOCER
+#---------------------------------------------------------------
+
+FILE_PATTERNS          = *.php *.blade.php *.js *.css *.md
+
+#---------------------------------------------------------------
+# FIN DEL ARCHIVO
+#---------------------------------------------------------------

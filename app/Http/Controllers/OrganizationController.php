@@ -4,20 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Organization;
-use App\Models\Persona;
+use App\Models\User;
 
 class OrganizationController extends Controller
 {
-    //mostrar el formulario 
-    public function create(){
+    // Mostrar formulario
+    public function create()
+    {
         return view('FormOrganizaciones');
     }
 
-    //guardar datos
-    public function store(Request $request) {
-         $data = $request->validate([
+    // Guardar datos
+    public function store(Request $request)
+    {
+        $data = $request->validate([
             'nombre_organizacion' => 'required|string|max:255',
             'zona' => 'required|string|max:255',
+            // 'person_id' => 'nullable|exists:users,id' // opcional
         ]);
 
         Organization::create($data);
@@ -25,11 +28,11 @@ class OrganizationController extends Controller
         return redirect()->route('zonas.index');
     }
 
-    //lista de datos
-    public function index() {
-       $organizaciones = Organization::all();
-       return view('listaOrganizaciones',compact('organizaciones'));
-       
+    // Listar datos
+    public function index()
+    {
+        $organizaciones = Organization::all();
+        return view('listaOrganizaciones', compact('organizaciones'));
     }
 
     // Mostrar formulario de edición
@@ -39,30 +42,23 @@ class OrganizationController extends Controller
         return view('EditarOrganizacion', compact('organizaciones'));
     }
 
-
-
-
-
-
-    
+    // Actualizar datos
     public function update(Request $request, $id)
     {
         $data = $request->validate([
             'nombre_organizacion' => 'required|string|max:255',
             'zona' => 'required|string|max:255',
-            // 'person_id' => 'nullable|exists:people,id', // si quieres mantenerlo opcional
+            // 'person_id' => 'nullable|exists:users,id'
         ]);
 
         $organizacion = Organization::findOrFail($id);
 
-        // Si quieres asignar person_id automáticamente, lo haces aquí:
-        $data['person_id'] = $organizacion->person_id; // opcional
+        // Mantener la relación existente
+        $data['person_id'] = $organizacion->person_id;
 
         $organizacion->update($data);
 
         return redirect()->route('zonas.index')
-                        ->with('success', 'Organización actualizada correctamente');
+                         ->with('success', 'Organización actualizada correctamente');
     }
-
-
 }

@@ -1,19 +1,21 @@
 <?php
 
 namespace App\Models;
-use App\Models\Person;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Organization extends Model
 {
-    //modelo de organizaciones
+    // Modelo de organizaciones
     protected $fillable = [
         'nombre_organizacion',
         'zona',
-        'person_id' 
+        'person_id'
     ];
-    public function person(){
-        return $this->belongsTo(Person::class);
+
+    public function person()
+    {
+        return $this->belongsTo(User::class, 'person_id');
     }
 }

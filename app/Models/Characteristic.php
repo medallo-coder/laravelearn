@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Characteristic extends Model
 {
@@ -30,10 +31,10 @@ class Characteristic extends Model
     ];
 
     /**
-     * Relación: una característica pertenece a una persona
+     * Relación: una característica pertenece a un usuario
      */
     public function person()
     {
-        return $this->belongsTo(People::class);
+        return $this->belongsTo(User::class, 'persona_id');
     }
 }

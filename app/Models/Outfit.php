@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Outfit extends Model
 {
-    //modelo de organizaciones
+    // Modelo de outfits
     protected $fillable = [
         'parte_superior',
         'color_superior',
@@ -15,11 +16,11 @@ class Outfit extends Model
         'calzado',
         'color_calzado',
         'accesorios',
-        'persona_id' 
-    ]; 
-    
+        'persona_id'
+    ];
 
-    public function Person() {
-    return $this->belongsTo(Person::class);
+    public function person()
+    {
+        return $this->belongsTo(User::class, 'persona_id');
     }
 }

@@ -100,101 +100,103 @@ button.secondary {
 
 <div class="form-container">
 
+<form method="POST" action="{{ route('desaparecidos.store') }}">
+    @csrf
+
     <!-- Indicador -->
     <div class="step-indicator">
-        <div class="step active" id="step-1">Fase 1<br>Persona</div>
-        <div class="step" id="step-2">Fase 2<br>Características</div>
-        <div class="step" id="step-3">Fase 3<br>Prendas</div>
+        <div class="step active">Fase 1<br>Persona</div>
+        <div class="step">Fase 2<br>Características</div>
+        <div class="step">Fase 3<br>Prendas</div>
     </div>
 
     <!-- FASE 1 -->
     <div class="step-content active">
         <label>Nombres</label>
-        <input type="text">
+        <input type="text" name="nombres">
 
         <label>Apellidos</label>
-        <input type="text">
-
-        <label>Edad (desaparición)</label>
-        <input type="number">
+        <input type="text" name="apellidos">
 
         <label>Descripción</label>
-        <textarea></textarea>
+        <textarea name="descripcion"></textarea>
 
         <label>Lugar de desaparición</label>
-        <input type="text">
+        <input type="text" name="lugar_desaparicion">
 
         <label>Fecha y hora</label>
-        <input type="datetime-local">
+        <input type="datetime-local" name="fecha_desaparicion">
     </div>
 
     <!-- FASE 2 -->
     <div class="step-content">
         <label>Sexo</label>
-        <select>
+        <select name="sexo">
             <option value="">Seleccione</option>
-            <option>Hombre</option>
-            <option>Mujer</option>
+            <option value="hombre">Hombre</option>
+            <option value="mujer">Mujer</option>
         </select>
 
         <label>Estatura</label>
-        <input type="text">
+        <input type="text" name="estatura">
 
         <label>Complexión</label>
-        <input type="text">
+        <input type="text" name="complexion">
 
         <label>Color de piel</label>
-        <input type="text">
+        <input type="text" name="color_piel">
 
         <label>Color de ojos</label>
-        <input type="text">
+        <input type="text" name="color_ojos">
 
         <label>Color de cabello</label>
-        <input type="text">
+        <input type="text" name="color_cabello">
 
         <label>Tipo de cabello</label>
-        <input type="text">
+        <input type="text" name="tipo_cabello">
 
         <label>Señas particulares</label>
-        <textarea></textarea>
+        <textarea name="senas_particulares"></textarea>
 
         <label>Implantes</label>
-        <input type="text">
+        <input type="text" name="implantes">
 
         <label>Prótesis</label>
-        <input type="text">
+        <input type="text" name="protesis">
     </div>
 
     <!-- FASE 3 -->
     <div class="step-content">
         <label>Parte superior</label>
-        <input type="text">
+        <input type="text" name="parte_superior">
 
         <label>Color parte superior</label>
-        <input type="text">
+        <input type="text" name="color_superior">
 
         <label>Parte inferior</label>
-        <input type="text">
+        <input type="text" name="parte_infeiror">
 
         <label>Color parte inferior</label>
-        <input type="text">
+        <input type="text" name="color_infeiror">
 
         <label>Calzado</label>
-        <input type="text">
+        <input type="text" name="calzado">
 
         <label>Color calzado</label>
-        <input type="text">
+        <input type="text" name="color_calzado">
 
         <label>Accesorios</label>
-        <input type="text">
+        <input type="text" name="accesorios">
     </div>
 
     <!-- BOTONES -->
     <div class="buttons">
-        <button class="secondary" onclick="prevStep()">Atrás</button>
-        <button onclick="nextStep()">Siguiente</button>
+        <button type="button" class="secondary" id="prevBtn" onclick="prevStep()">Atrás</button>
+        <button type="button" id="nextBtn" onclick="nextStep()">Siguiente</button>
+        <button type="submit" id="saveBtn" style="display:none;">Guardar</button>
     </div>
 
+</form>
 </div>
 
 <script>
@@ -202,19 +204,31 @@ let currentStep = 0;
 const steps = document.querySelectorAll('.step-content');
 const indicators = document.querySelectorAll('.step');
 
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const saveBtn = document.getElementById('saveBtn');
+
 function updateSteps() {
     steps.forEach((step, index) => {
         step.classList.toggle('active', index === currentStep);
         indicators[index].classList.toggle('active', index === currentStep);
     });
+
+    prevBtn.style.display = currentStep === 0 ? 'none' : 'inline-block';
+
+    if (currentStep === steps.length - 1) {
+        nextBtn.style.display = 'none';
+        saveBtn.style.display = 'inline-block';
+    } else {
+        nextBtn.style.display = 'inline-block';
+        saveBtn.style.display = 'none';
+    }
 }
 
 function nextStep() {
     if (currentStep < steps.length - 1) {
         currentStep++;
         updateSteps();
-    } else {
-        alert('Formulario completado (simulado)');
     }
 }
 
@@ -224,6 +238,8 @@ function prevStep() {
         updateSteps();
     }
 }
+
+updateSteps();
 </script>
 
 </body>

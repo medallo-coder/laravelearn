@@ -6,33 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('outfits', function (Blueprint $table) {
             $table->id('id_outfit');
-            $table->string('parte_superior');
-            $table->string('color_superior');
-            $table->string('parte_infeiror');
-            $table->string('color_infeiror');
-            $table->string('calzado');
-            $table->string('color_calzado');
-            $table->string('accesorios');
+
+            $table->string('parte_superior')->nullable();
+            $table->string('color_superior')->nullable();
+            $table->string('parte_inferior')->nullable();
+            $table->string('color_infeiror')->nullable();
+            $table->string('calzado')->nullable();
+            $table->string('color_calzado')->nullable();
+            $table->string('accesorios')->nullable();
+
+            //  antes: people → ahora: users
+            //  se conserva persona_id
             $table->foreignId('persona_id')
-             ->constrained('people')
-             ->onDelete('cascade');
+                ->constrained('users')
+                ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('outfits');
-
     }
 };
