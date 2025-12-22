@@ -9,7 +9,7 @@ use App\Models\Characteristic;
 use App\Models\Outfit;
 class DesaparecidoController extends Controller
 {
-    // Mostrar lista de desaparecidos (rol_id = 1)
+    // Mostrar lista de desaparecidos 
     public function index()
     {
         $humanos = User::where('rol_id', 1)->get();
@@ -28,20 +28,21 @@ public function store(Request $request)
 {
     $request->validate([
         // FASE 1
-        'nombres'            => 'required|string|max:255',
-        'apellidos'          => 'required|string|max:255',
+        'nombres'            => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
+        'apellidos'          => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
         'descripcion'        => 'required|string|max:300',
         'lugar_desaparicion' => 'required|string|max:255',
         'fecha_desaparicion' => 'required|date',
 
         // FASE 2
         'sexo'               => 'nullable|in:hombre,mujer',
+        'edad'               => 'nullable|integer|digits_between:1,3',
         'estatura'           => 'nullable|string|max:50',
         'complexion'         => 'nullable|string|max:255',
-        'color_piel'         => 'nullable|string|max:255',
-        'color_ojos'         => 'nullable|string|max:255',
-        'color_cabello'      => 'nullable|string|max:255',
-        'tipo_cabello'       => 'nullable|string|max:255',
+        'color_piel'         => 'nullable|string|max:255|regex:/^[a-zA-Z\s]+$/',
+        'color_ojos'         => 'nullable|string|max:255|regex:/^[a-zA-Z\s]+$/',
+        'color_cabello'      => 'nullable|string|max:255|regex:/^[a-zA-Z\s]+$/',
+        'tipo_cabello'       => 'nullable|string|max:255|regex:/^[a-zA-Z\s]+$/',
         'senas_particulares' => 'nullable|string',
         'implantes'          => 'nullable|string|max:255',
         'protesis'           => 'nullable|string|max:255',
@@ -60,7 +61,7 @@ public function store(Request $request)
 
     DB::transaction(function () use ($request) {
 
-        // 🔹 1. USER (persona principal)
+        //   USER (persona principal)
         $user = User::create([
             'nombres'            => $request->nombres,
             'apellidos'          => $request->apellidos,
@@ -70,9 +71,10 @@ public function store(Request $request)
             'rol_id'             => 1,
         ]);
 
-        // 🔹 2. CHARACTERISTICS
+        //  CHARACTERISTICS
         Characteristic::create([
             'sexo'               => $request->sexo,
+            'edad'               => $request->edad,
             'estatura'           => $request->estatura,
             'complexion'         => $request->complexion,
             'color_piel'         => $request->color_piel,
@@ -85,7 +87,7 @@ public function store(Request $request)
             'persona_id'         => $user->id,
         ]);
 
-        // 🔹 3. OUTFITS
+        //  OUTFITS
         Outfit::create([
             'parte_superior' => $request->parte_superior,
             'color_superior' => $request->color_superior,

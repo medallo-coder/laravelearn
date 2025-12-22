@@ -42,12 +42,4 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    // ===============================
-    // ACCESSORS
-    // ===============================
-
-    public function getNombreCompletoAttribute()
-    {
-        return trim(($this->nombres ?? '') . ' ' . ($this->apellidos ?? ''));
-    }
 }

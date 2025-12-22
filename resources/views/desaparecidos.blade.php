@@ -92,6 +92,16 @@ button:hover {
 button.secondary {
     background-color: #999;
 }
+.is-invalid {
+    border: 1px solid #f5c2c7;
+    background: #fff5f5;
+}
+.error-text {
+    color: red;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
 </style>
 </head>
 <body>
@@ -112,9 +122,17 @@ button.secondary {
 
     <!-- FASE 1 -->
     <div class="step-content active">
+
+    @if ($errors->any()) 
+    @foreach ($errors->all() as $error) @endforeach
+    <div class="error-text">{{ $error }}</div>
+    @endif
+ 
+
         <label>Nombres</label>
         <input type="text" name="nombres">
 
+        
         <label>Apellidos</label>
         <input type="text" name="apellidos">
 
@@ -139,6 +157,9 @@ button.secondary {
 
         <label>Estatura</label>
         <input type="text" name="estatura">
+
+        <label>Edad desaparición</label>
+        <input type="number" name="edad">
 
         <label>Complexión</label>
         <input type="text" name="complexion">
@@ -200,6 +221,7 @@ button.secondary {
 </div>
 
 <script>
+
 let currentStep = 0;
 const steps = document.querySelectorAll('.step-content');
 const indicators = document.querySelectorAll('.step');
@@ -241,6 +263,10 @@ function prevStep() {
 
 updateSteps();
 </script>
+
+
+
+
 
 </body>
 </html>
